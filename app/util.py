@@ -1,12 +1,15 @@
 ''' Some helpers '''
 from datetime import datetime, timedelta
 from re import compile as re_compile
-from time import sleep as time_sleep
+
+import matplotlib.pyplot as plt
+import matplotlib.dates as mdates
+import matplotlib
 
 re_search = re_compile(r'(\d{1,2}) (minute|minutes|hour|hours) ago')
 
 
-def aprox_time(time_cad, now=datetime.now()):
+def aprox_time(time_cad, now=None):
     '''
         Depending on the post time, take the moment when created
 
@@ -32,6 +35,9 @@ def aprox_time(time_cad, now=datetime.now()):
 
     params = {}
 
+    if not now:
+        now = datetime.now()
+
     if time_cad is None \
        or'just now' in time_cad \
        or time_cad.strip() == '':
@@ -51,18 +57,6 @@ def aprox_time(time_cad, now=datetime.now()):
     return now - timedelta(**params)
 
 
-def run_loop(task, times=2, delay=1):
-    """ Run 'task' some many times"""
-
-    i = 0
-
-    while i < times:
-
-        # run task
-        task()
-
-        # increment count
-        i += 1
-
-        # wait a while
-        time_sleep(delay)
+def add_30_minutes(ts):
+    """Helper to add 30 minutes to a given time"""
+    return ts + timedelta(minutes=30)

@@ -9,6 +9,7 @@ from requests import get
 from bs4 import BeautifulSoup
 from app.util import aprox_time
 from app.db.persistence import save_post
+from time import sleep as time_sleep
 
 HEADERS = {
     'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1)'
@@ -71,3 +72,21 @@ class Crawler:
             # remember the first row (in our case, as we inverted the array, the last)
             # so next time running we can compare for avoiding duplicates
             self.last_permalink = get_permalink(self.divs[0])
+
+
+    def run_loop(self, times=2, delay=1):
+        """ Run 'task' some many times"""
+
+        i = 0
+
+        while i < times:
+
+            # run task
+            self.pull_data()
+            self.save_data()
+
+            # increment count
+            i += 1
+
+            # wait a while
+            time_sleep(delay)
