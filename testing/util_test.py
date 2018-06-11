@@ -1,6 +1,6 @@
 import unittest
-from util import aprox_time
 from datetime import datetime, timedelta
+from app.util import aprox_time
 
 
 class Util(unittest.TestCase):
