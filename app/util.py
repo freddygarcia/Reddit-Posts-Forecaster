@@ -2,6 +2,7 @@
 from datetime import datetime, timedelta
 from re import compile as re_compile
 
+import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 import matplotlib
@@ -60,3 +61,23 @@ def aprox_time(time_cad, now=None):
 def add_30_minutes(ts):
     """Helper to add 30 minutes to a given time"""
     return ts + timedelta(minutes=30)
+
+
+def plot_forecast(posts, forecast_set):
+    # forecast_set = ln.predict(X_lately)
+
+    posts['Forecast'] = np.nan
+
+    last_date = posts.iloc[-1].time
+
+    for i in forecast_set:
+        last_date = last_date + timedelta(minutes=30)
+        posts.loc[last_date] = [np.nan for _ in range(len(posts.columns)-1)] + [i]
+
+    posts['count'].plot()
+    posts['Forecast'].plot()
+    plt.legend(loc=4)
+    plt.xlabel('Date')
+    plt.ylabel('Count')
+    plt.show()
+        
