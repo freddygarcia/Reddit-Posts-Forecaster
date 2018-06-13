@@ -13,5 +13,5 @@ def save_post(permalink, created_at, content=''):
     try:
         session.commit()
     except Exception as e:
-        # TODO
-        print(e)
+        session.rollback()
+        print(f'error catched : {permalink}')
