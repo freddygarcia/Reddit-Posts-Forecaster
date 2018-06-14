@@ -14,7 +14,6 @@ import pandas as pd
 
 from app.db.connection import session
 from app.db.models import Post
-from app.util import add_30_minutes
 
 
 def get_posts(ts_from, ts_to):
@@ -26,32 +25,15 @@ def get_posts(ts_from, ts_to):
 
     if posts:
         posts_df = DataFrame(list(map(lambda post: post.to_dict(), posts)))
-        calc = []
+        posts_df.set_index('created_at', inplace=True)
 
-        # perform a 30-minutes-grouping
-        while ts_from < ts_to:
-
-            ts_from_plus_30_min = add_30_minutes(ts_from)
-
-            # counts posts in 30 minutes range
-            count = posts_df.loc[
-                (posts_df['created_at'] >= ts_from)
-                & (posts_df['created_at'] < ts_from_plus_30_min)
-            ].shape[0]
-
-            calc.append((ts_from, count))
-
-            ts_from = add_30_minutes(ts_from)
-
-        return DataFrame(calc, columns=['time', 'count'])
+        # group every 30 minuts
+        MINUTES_30 = '30T'
+        return posts_df.resample(MINUTES_30).count()
 
 
-def plots(df):
-    # TODO 
-    _df = df.set_index('time')
-
+def plots(posts_df, graph_type='bar'):
     _df.plot()
-
     plt.show()
 
 
@@ -102,7 +84,3 @@ def predict(time=None):
     # forecast_set = ln.predict(X_lately)
 
     # return accuracy
-
-# if __name__ == '__main__':
-#     accuracy = predict()
-#     print(accuracy)
