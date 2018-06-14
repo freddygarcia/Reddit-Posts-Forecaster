@@ -45,7 +45,7 @@ class Crawler:
 
         # short function to get the permalink from our base div
         get_permalink = lambda div: div.find('a', {'class': 'SQnoC3ObvgnGjWt90zD9Z'})['href']
-
+        
         # this var will let us know when we can start to
         # save records, cause we dont want to insert duplicates
         can_save = False
@@ -53,15 +53,14 @@ class Crawler:
         for div in reversed(self.divs):
             # for convenience, insert rows in desc order
 
-            text_time = div.find('a', {'class': 'hrMLEH'}).text
+            text_time = div.find('a', {'class': '_3jOxDPIQ0KaOWpzvSQo-1s'}).text
             created_at = aprox_time(text_time)
             permalink = get_permalink(div)
-            content = div.find('h2').text.encode('cp1252')
 
             if can_save:
                 # if previous record was same as saved in last run,
                 # start to save
-                save_post(permalink, created_at, content)
+                save_post(permalink, created_at)
 
             if permalink == self.last_permalink \
                or self.last_permalink == '':
