@@ -1,8 +1,6 @@
 '''
-All related to download y save posts from reddit.
-
-Request is performed and then parsed with beautifulsoup.
-Parsed data is stored using the app.persistence module.
+this file is a helper to retrieve massive entries for
+Reddit from pushshift api
 '''
 
 from datetime import datetime
@@ -17,11 +15,6 @@ HEADERS = {
 
 URL = ('https://api.pushshift.io/reddit/search/submission/'
        '?filter=permalink,created_utc,title&size=1000&subreddit=AskReddit')
-
-
-def save_last(last):
-    with open('last.txt', 'w+') as f:
-        f.write(last)
 
 
 def save_posts(posts):
@@ -46,26 +39,5 @@ def pull_data(after=None):
 
     save_posts(data)
 
-    if after: save_last(str(after))
-
     ref_name = data[-1]['created_utc']
     pull_data(ref_name)
-
-
-
-def run_loop(self, times=2, delay=1):
-    """ Run 'task' some many times"""
-
-    i = 0
-
-    while i < times:
-
-        # run task
-        self.pull_data()
-        self.save_data()
-
-        # increment count
-        i += 1
-
-        # wait a while
-        time_sleep(delay)
