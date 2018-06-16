@@ -161,4 +161,4 @@ class Forecaster():
         plt.plot(test['permalink'], label='Test')
         plt.plot(df['forecast'], label='Forecast')
         plt.legend(loc='best')
-        plt.show()
+        plt.show()  
