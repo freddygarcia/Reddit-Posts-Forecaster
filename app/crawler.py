@@ -73,8 +73,17 @@ class Crawler:
             self.last_permalink = get_permalink(self.divs[0])
 
 
-    def run_loop(self, times=2, delay=1):
-        """ Run 'task' some many times"""
+    def pull_save_data(self, times=2, delay=1):
+        """ Perform pull and data some
+
+        Parameters
+        ----------
+        times: int
+            How many times loop will run
+
+        delay: int
+            Delay in seconds for performing requests
+        """
 
         i = 0
 
