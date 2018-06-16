@@ -70,10 +70,15 @@ class Forecaster():
         SEASONAL_PERIOD = DATA_PERIOD * 1
 
         # last date of records for reference
-        model = ExponentialSmoothing(np.asarray(train_data.permalink),
-                                    seasonal_periods=SEASONAL_PERIOD,
-                                    trend='add',
-                                    seasonal='add').fit()
+
+        try:
+            model = ExponentialSmoothing(np.asarray(train_data.permalink),
+                                        seasonal_periods=SEASONAL_PERIOD,
+                                        trend='add',
+                                        seasonal='add').fit()
+            
+        except ValueError as e:
+            raise Exception("There's not enougth data to perform train the model")
 
         # Used to count steps starting from
         # that date.
