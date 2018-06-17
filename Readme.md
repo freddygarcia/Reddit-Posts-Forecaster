@@ -60,6 +60,10 @@ Create another function which `plots` this dataframe so we could see the frequen
 >>> plots(posts)
 ```
 
+
+![Drag Racing](_.png)
+
+
 Making `predictions`
 
 ```python
