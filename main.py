@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 
 from app.db.connection import session
 from app.db.models import Post
+from app.util import perfect_datetime
 
 
 def get_posts(ts_from=None, ts_to=None):
@@ -17,7 +18,10 @@ def get_posts(ts_from=None, ts_to=None):
     query = session.query(Post)
     posts = None
 
+    ts_to = perfect_datetime(ts_to)
+
     if ts_from:
+        ts_from = perfect_datetime(ts_from)
         posts = (query.filter(Post.created_at
                 .between(ts_from, ts_to))).all()
     else:
@@ -35,7 +39,9 @@ def get_posts(ts_from=None, ts_to=None):
 
 
 def plots(posts_df):
-    posts_df.plot()
+    plt.figure(figsize=(18,12))
+    plt.plot(posts_df, label='posts')
+    plt.legend(loc='best')
     plt.show()
 
 

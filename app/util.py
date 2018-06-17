@@ -66,3 +66,8 @@ def data_range():
     p_min = get_date(query.order_by(Post.created_at))
 
     return p_min, p_max
+
+def perfect_datetime(ts):
+    '''Gives a consistent datetime without confusing time values'''
+    minutes = 0 if ts.minute == 0 else 30
+    return ts.replace(minute=minutes, second=0, microsecond=0)
