@@ -152,14 +152,21 @@ class Forecaster():
         RMS = sqrt(mean_squared_error(test_data.permalink, test_forecast))
 
         return RMS
+        
 
+    def plot_forecaster(self, train, test, ts=None):
 
-    def plot_forecaster(self, train, test):
-        # Create data frame
+        df_size = len(test.index)
+        df_forecast = self.model.forecast(len(test.index))
+
+        if ts:
+            df_forecast = self.forecast(ts)
+            df_size = len(df_forecast)
+
         df = pd.DataFrame()
-        df['date'] = pd.date_range(train.index.max(), periods=len(test.index), freq='30T')
+        df['date'] = pd.date_range(train.index.max(), periods=df_size, freq='30T')
         df.set_index('date', inplace=True)
-        df['forecast'] = self.model.forecast(len(test.index))
+        df['forecast'] = df_forecast
 
         plt.figure(figsize=(16,8))
         plt.plot(train['permalink'], label='Train')
