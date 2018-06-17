@@ -7,11 +7,11 @@ Base = declarative_base()
 class Post(Base):
     '''Define model to data persistence'''
 
-    __tablename__ = 'post'
+    __tablename__ = 'posts'
 
     id = Column(Integer, primary_key=True)
     created_at = Column(TIMESTAMP, nullable=False)
-    permalink = Column(String(120), nullable=False)
+    permalink = Column(String(120), nullable=False, unique=True)
 
     def to_dict(self):
         return {
