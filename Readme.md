@@ -38,8 +38,8 @@ Method which takes in two timestamps, a `ts_from` and a `ts_to`. Pull all posts 
 
 >>> posts = get_posts(six_hours_ago, now)
 >>> posts.head()
+```
 
-```python
 | created_at          |   permalink |
 |:--------------------|------------:|
 | 2018-06-17 11:30:00 |         110 |
