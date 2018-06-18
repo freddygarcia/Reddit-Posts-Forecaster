@@ -70,7 +70,9 @@ Making `predictions`
 >>> from main import predict
 >>> from datetime import datetime
 >>> ts  = datetime(2018, 6, 18, 16, 2)
->>> print(predict(ts))
+# this is the prediction of the number of posts between
+# 2018-06-18 16:02:00 and 2018-06-18 16:03:00
+>>> predict(ts)
 364
 ```
 
@@ -83,9 +85,6 @@ Making `predictions`
 * numpy
 * pandas
 * requests
-* scikit
-* scipy
 * statsmodels
 * SQLAlchemy
 * sklearn
-
